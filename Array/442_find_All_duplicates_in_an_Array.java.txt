@@ -1,0 +1,47 @@
+// Brute force Approach
+
+
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        
+        int n = nums.length;
+
+        List<Integer> arr = new ArrayList<>();
+
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n; j++){
+                if(nums[i] == nums[j]){
+                    arr.add(nums[i]);
+                }
+            }
+        }
+
+        return arr;
+    }
+}
+
+
+
+//  Optimal Approach
+
+
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        
+        Set<Integer> set = new HashSet<>();
+
+        List<Integer> answer = new ArrayList<>();
+
+
+        for(int i : nums){
+            if(set.contains(i)){
+                answer.add(i);
+
+            }else {
+                set.add(i);
+            }
+        }
+
+        return answer;
+    }
+}

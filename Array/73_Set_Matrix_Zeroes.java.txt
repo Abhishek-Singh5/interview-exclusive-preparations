@@ -1,0 +1,85 @@
+//  Frist Approach
+
+
+// TC - O(m*n * (n + m))
+// SC - O(m*n)
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        int temp[][] = new int[n][m];
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){ 
+                temp[i][j] = matrix[i][j];  // copy in temp array
+            }
+        }
+
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+
+                if(matrix[i][j] == 0) {
+                    for(int k = 0; k < m; k++){
+                        temp[i][k] = 0;  // making column zero
+                    }
+
+                    for(int k = 0; k < n; k++){
+                        temp[k][j] = 0;  // making row zero
+                    }
+                }
+            }
+        }
+
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                matrix[i][j] = temp[i][j]; // copy in original matrix
+            }
+        }
+    }
+}
+
+
+
+// Second Approach
+
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        boolean row[] = new boolean[n];
+        boolean col[] = new boolean[m];
+
+        for(int i = 0; i < n; i++){
+            row[i] = false;
+        }
+
+        for(int i = 0; i < m; i++){
+            col[i] = false;
+        }
+
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(matrix[i][j] == 0){
+                    row[i] = true;
+                    col[j] = true;
+                }
+            }
+        }
+
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                if(row[i] == true || col[j] == true){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+    }
+}

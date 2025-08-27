@@ -1,0 +1,79 @@
+// Brute Force Approach
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        
+        int n = nums.length;
+
+        int duplicate = 0;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                if(nums[i] == nums[j]){
+                    duplicate = nums[i];
+                }
+            }
+        }
+
+        return duplicate;
+    }
+}
+
+
+
+// 2nd Approach using Sorting
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int n = nums.length;
+
+        Arrays.sort(nums);
+
+        int duplicate = -1;
+
+        for(int i = 0; i < n-1; i++){
+            if(nums[i] == nums[i+1]){
+                duplicate = nums[i];
+            }
+        }
+
+        return duplicate;
+    }
+}
+
+
+
+
+
+// 3rd Approach using Frequency Array
+
+
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int n = nums.length;
+
+        int max = 0;
+        for(int i = 0; i < n; i++){
+            if(nums[i] > max){
+                max = nums[i];
+            }
+        }
+
+        int freq[] = new int[max + 1];
+
+        for(int i = 0; i < n; i++){
+            freq[nums[i]]++;
+        }
+
+        int duplicate = 0;
+
+        for(int i = 0; i < max + 1; i++){
+            if(freq[i] >= 2){
+                duplicate = i;
+            }
+        }
+
+        return duplicate;
+    }
+}
