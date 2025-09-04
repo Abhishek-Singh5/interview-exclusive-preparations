@@ -29,73 +29,103 @@ class Solution {
 
 
 
-
 import java.util.*;
 class Main{
-    public static int merge(int arr[], int start, int mid, int end){
-        List<Integer> temp = new ArrayList<>();
+    
+    public static int merge(int left, int mid, int right, int nums[]){
         
-        int i = start;
-        int j = mid + 1;
+        int n1 = (mid - left) + 1;
+        int n2 = right - mid;
+        
         int count = 0;
         
-        while(i <= mid  && j <= end){
-            if(arr[i] >= arr[j]){
-                count = count + (mid - i + 1);
-                temp.add(arr[j]);
-                j++;
-                
-            }else{
-                temp.add(arr[i]);
+        int Left[] = new int[n1];
+        int Right[] = new int[n2];
+        
+        int k = left;
+        
+        for(int i = 0; i < n1; i++){
+            Left[i] = nums[k];
+            k++;
+        }
+        
+        for(int i = 0; i < n2; i++){
+            Right[i] = nums[k];
+            k++;
+        }
+        
+        
+        int i = 0;
+        int j = 0;
+        
+        k = left;
+        
+        
+        while(i < n1  &&  j < n2){
+            if(Left[i] < Right[j]){
+                nums[k] = Left[i];
                 i++;
+                k++;
+                
+            } else {
+               nums[k] = Right[j];
+               count = count + (n1 - i);
+               j++;
+               k++;
             }
         }
         
-        while(i <= mid){
-            temp.add(arr[i]);
+        while(i < n1){
+            nums[k] = Left[i];
             i++;
+            k++;
         }
         
-        while(j <= end){
-            temp.add(arr[j]);
+        
+        while(j < n2){
+            nums[k] = Right[j];
             j++;
+            k++;
         }
         
-        for(int k = start; k <= end; k++){
-            arr[k] = temp.get(k - start);
-        }
         
         return count;
+        
     }
     
-    public static int mergeSort(int arr[], int start, int end){
+    
+    public static int mergeSort(int left, int right, int nums[]){
+        
         int count = 0;
         
-        if(start >= end){
+        if(left == right){
             return count;
         }
         
-        int mid = (start + end) / 2;
         
-        count += mergeSort(arr, start, mid);
-        count += mergeSort(arr, mid + 1, end);
-        count += merge(arr, start, mid, end);
+        int mid = (left + right) / 2;
+        
+        count = count + mergeSort(left, mid, nums);
+        count = count + mergeSort(mid+1, right, nums);
+        
+        count = count + merge(left, mid, right, nums);
         
         return count;
-    }
-    
-    
-    public static int inversion(int nums[], int n){
-        return mergeSort(nums, 0, n-1);
-    }
-    
-    
-    public static void main(String[] args){
-        int nums[] = {5, 4, 3, 2, 1};
-        int n = nums.length;
         
-        int count = inversion(nums, n);
-        System.out.println("Number of Inversions are :- " + count);
+    }
+    
+    public static void main(String []k){
+        Scanner s1 = new Scanner(System.in);
+        
+        int n = s1.nextInt();
+        int arr[] = new int[n];
+        
+        for(int i = 0; i < n; i++){
+            arr[i] = s1.nextInt();
+        }
+        
+        int count = mergeSort(0, n-1, arr);
+        
+        System.out.println(count);
     }
 }
-
