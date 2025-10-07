@@ -30,7 +30,9 @@ class Solution {
                 j++;
 
             }else{
+
                 i++;
+                
             }
         }
 
